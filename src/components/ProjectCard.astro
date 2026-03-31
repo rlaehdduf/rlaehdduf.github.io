@@ -1,0 +1,86 @@
+---
+import TechBadge from './TechBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  technologies: string[];
+  slug: string;
+  featured?: boolean;
+}
+
+const { title, description, image, technologies, slug, featured } = Astro.props;
+---
+
+<a href={`/projects/${slug}`} class="project-card" data-featured={featured}>
+  {image && (
+    <div class="card-image">
+      <img src={image} alt={title} loading="lazy" />
+    </div>
+  )}
+  <div class="card-content">
+    <h3>{title}</h3>
+    <p class="description">{description}</p>
+    <div class="tech-stack">
+      {technologies.map((tech) => <TechBadge name={tech} />)}
+    </div>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    display: block;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+  }
+
+  .project-card[data-featured="true"] {
+    border-color: var(--primary);
+  }
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  h3 {
+    color: var(--text);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .description {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .tech-stack {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+</style>
