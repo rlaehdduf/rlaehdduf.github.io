@@ -13,6 +13,9 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+
+// placeholder 이미지는 259 bytes, 실제 이미지는 더 큼
+const hasRealImage = project.data.image && project.data.image !== '/images/placeholder.svg';
 ---
 
 <BaseLayout title={project.data.title}>
@@ -27,9 +30,16 @@ const { Content } = await render(project);
       </div>
     </header>
 
-    {project.data.image && (
+    {hasRealImage ? (
       <div class="project-image">
-        <img src={project.data.image} alt={project.data.title} />
+        <img src={project.data.image} alt={project.data.title} onerror="this.parentElement.style.display='none'" />
+      </div>
+    ) : (
+      <div class="project-image project-image-placeholder">
+        <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437" />
+        </svg>
+        <span class="placeholder-text">No Preview Available</span>
       </div>
     )}
 
@@ -103,11 +113,32 @@ const { Content } = await render(project);
     overflow: hidden;
     margin-bottom: 2rem;
     background: var(--card-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
   }
 
   .project-image img {
     width: 100%;
     height: auto;
+  }
+
+  .project-image-placeholder {
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--text-muted);
+  }
+
+  .placeholder-icon {
+    width: 64px;
+    height: 64px;
+    opacity: 0.5;
+  }
+
+  .placeholder-text {
+    font-size: 0.875rem;
+    opacity: 0.6;
   }
 
   .content {
