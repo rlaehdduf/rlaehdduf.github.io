@@ -192,7 +192,7 @@ const pathname = Astro.url.pathname;
   .project-tree {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 
   .tree-folder {
@@ -232,12 +232,15 @@ const pathname = Astro.url.pathname;
   .tree-folder-icon {
     font-size: 1.125rem;
     display: inline-block;
+    width: 24px;
+    text-align: center;
   }
 
   .tree-folder-label {
     color: #e5e7eb;
     font-size: 0.9rem;
     font-weight: 600;
+    flex: 1;
   }
 
   .tree-folder-count {
@@ -247,7 +250,6 @@ const pathname = Astro.url.pathname;
     padding: 0.125rem 0.5rem;
     border-radius: 10px;
     border: 1px solid rgba(100, 103, 106, 0.3);
-    margin-left: auto;
   }
 
   .tree-children {
@@ -255,6 +257,8 @@ const pathname = Astro.url.pathname;
     overflow: hidden;
     transition: max-height 0.3s ease;
     background: rgba(45, 47, 50, 0.5);
+    display: flex;
+    flex-direction: column;
   }
 
   .tree-children.expanded {
@@ -271,6 +275,7 @@ const pathname = Astro.url.pathname;
     transition: all 0.2s;
     text-decoration: none;
     border-left: 2px solid transparent;
+    width: 100%;
   }
 
   .tree-item:hover {
@@ -281,14 +286,15 @@ const pathname = Astro.url.pathname;
   .tree-item-icon {
     font-size: 0.875rem;
     display: inline-block;
+    width: 20px;
+    text-align: center;
   }
 
   .tree-item-label {
     color: #e5e7eb;
     font-size: 0.85rem;
-    flex: 1 1 auto;
-    min-width: 0;
-    word-break: break-word;
+    flex: 1;
+    text-align: left;
   }
 
   .tree-item-type {
@@ -298,7 +304,6 @@ const pathname = Astro.url.pathname;
     padding: 0.125rem 0.5rem;
     border-radius: 6px;
     border: 1px solid rgba(100, 103, 106, 0.3);
-    flex-shrink: 0;
   }
 </style>
 
@@ -361,7 +366,10 @@ const pathname = Astro.url.pathname;
 
     // 트리 구조 렌더링
     function renderProjectTree() {
-      if (!projectTree) return;
+      if (!projectTree) {
+        console.error('projectTree not found');
+        return;
+      }
 
       projectTree.innerHTML = '';
 
@@ -374,14 +382,32 @@ const pathname = Astro.url.pathname;
         const folder = document.createElement('div');
         folder.className = 'tree-folder';
         
+        // 헤더 생성
         const header = document.createElement('div');
         header.className = 'tree-folder-header';
-        header.innerHTML = 
-          '<span class="tree-folder-arrow">▶</span>' +
-          '<span class="tree-folder-icon">' + type.icon + '</span>' +
-          '<span class="tree-folder-label">' + type.label + '</span>' +
-          '<span class="tree-folder-count">' + typeProjects.length + '</span>';
         
+        const arrow = document.createElement('span');
+        arrow.className = 'tree-folder-arrow';
+        arrow.textContent = '▶';
+        
+        const icon = document.createElement('span');
+        icon.className = 'tree-folder-icon';
+        icon.textContent = type.icon;
+        
+        const label = document.createElement('span');
+        label.className = 'tree-folder-label';
+        label.textContent = type.label;
+        
+        const count = document.createElement('span');
+        count.className = 'tree-folder-count';
+        count.textContent = typeProjects.length;
+        
+        header.appendChild(arrow);
+        header.appendChild(icon);
+        header.appendChild(label);
+        header.appendChild(count);
+        
+        // 자식 항목 생성
         const children = document.createElement('div');
         children.className = 'tree-children';
         
@@ -389,10 +415,23 @@ const pathname = Astro.url.pathname;
           const item = document.createElement('a');
           item.className = 'tree-item';
           item.href = '/projects/' + project.slug;
-          item.innerHTML = 
-            '<span class="tree-item-icon">' + project.icon + '</span>' +
-            '<span class="tree-item-label">' + project.title + '</span>' +
-            '<span class="tree-item-type">' + type.label + '</span>';
+          
+          const itemIcon = document.createElement('span');
+          itemIcon.className = 'tree-item-icon';
+          itemIcon.textContent = project.icon;
+          
+          const itemLabel = document.createElement('span');
+          itemLabel.className = 'tree-item-label';
+          itemLabel.textContent = project.title;
+          
+          const itemType = document.createElement('span');
+          itemType.className = 'tree-item-type';
+          itemType.textContent = type.label;
+          
+          item.appendChild(itemIcon);
+          item.appendChild(itemLabel);
+          item.appendChild(itemType);
+          
           children.appendChild(item);
         });
 
@@ -400,27 +439,31 @@ const pathname = Astro.url.pathname;
         folder.appendChild(children);
         projectTree.appendChild(folder);
 
-        // 폴더 클릭 이벤트
+        // 폴더 클릭 이벤트 - 따로 함수로 분리
         header.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
-          
-          const isExpanded = children.classList.contains('expanded');
-          
-          // 다른 폴더들은 모두 닫기
-          document.querySelectorAll('.tree-children.expanded').forEach(function(el) {
-            el.classList.remove('expanded');
-            const arrow = el.previousElementSibling ? el.previousElementSibling.querySelector('.tree-folder-arrow') : null;
-            if (arrow) arrow.classList.remove('expanded');
-          });
-          
-          // 현재 폴더 토글
-          if (!isExpanded) {
-            children.classList.add('expanded');
-            header.querySelector('.tree-folder-arrow').classList.add('expanded');
-          }
+          toggleFolder(header, children, arrow);
         });
       });
+    }
+
+    // 폴더 토글 함수
+    function toggleFolder(header, children, arrow) {
+      const isExpanded = children.classList.contains('expanded');
+      
+      // 모든 폴더 닫기
+      document.querySelectorAll('.tree-children.expanded').forEach(function(el) {
+        el.classList.remove('expanded');
+        const siblingArrow = el.previousElementSibling ? el.previousElementSibling.querySelector('.tree-folder-arrow') : null;
+        if (siblingArrow) siblingArrow.classList.remove('expanded');
+      });
+      
+      // 현재 폴더 토글
+      if (!isExpanded) {
+        children.classList.add('expanded');
+        arrow.classList.add('expanded');
+      }
     }
 
     // 초기 렌더링
