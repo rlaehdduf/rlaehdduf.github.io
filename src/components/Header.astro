@@ -23,9 +23,7 @@ const pathname = Astro.url.pathname;
     <div class="filter-content">
       <p class="menu-hint">폴더 클릭: 확장/접기<br>프로젝트 클릭: 이동</p>
       
-      <div class="project-tree" id="projectTree">
-        <!-- 자바스크립트로 동적 생성 -->
-      </div>
+      <div class="project-tree" id="projectTree"></div>
     </div>
   </div>
 </header>
@@ -270,7 +268,7 @@ const pathname = Astro.url.pathname;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    padding: 0.625rem 1rem;
     cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
@@ -307,131 +305,81 @@ const pathname = Astro.url.pathname;
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
+<script client:load>
+  const projects = [
+    { slug: 'defencegame', title: 'DefenceGame', type: 'unity', icon: '🎯' },
+    { slug: 'greeddungeon', title: 'GreedDungeon', type: 'unity', icon: '⚔️' },
+    { slug: 'pathfinder', title: 'Pathfinder', type: 'unity', icon: '🗺️' },
+    { slug: 'shotup', title: 'ShotUp', type: 'unity', icon: '🎯' },
+    { slug: 'community-board', title: 'CommunityBoard', type: 'web', icon: '💬' },
+    { slug: 'cookie-clicker', title: 'Cookie Clicker', type: 'server', icon: '🍪' },
+    { slug: 'kirdia-simulator', title: 'Kirdia Simulator', type: 'docs', icon: '📖' },
+    { slug: 'gamedevtoolkit', title: 'GameDevToolkit', type: 'package', icon: '🧰' },
+  ];
+
+  const projectTypes = [
+    { value: 'unity', label: 'Unity', icon: '🎮' },
+    { value: 'web', label: 'Web', icon: '🌐' },
+    { value: 'package', label: 'Package', icon: '📦' },
+    { value: 'server', label: 'Server', icon: '🖥️' },
+    { value: 'docs', label: 'Docs', icon: '📄' },
+  ];
+
+  function initMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const filterMenu = document.getElementById('filterMenu');
     const closeBtn = document.getElementById('closeBtn');
     const projectTree = document.getElementById('projectTree');
-
-    // 프로젝트 데이터
-    const projects = [
-      { slug: 'defencegame', title: 'DefenceGame', type: 'unity', icon: '🎯' },
-      { slug: 'greeddungeon', title: 'GreedDungeon', type: 'unity', icon: '⚔️' },
-      { slug: 'pathfinder', title: 'Pathfinder', type: 'unity', icon: '🗺️' },
-      { slug: 'shotup', title: 'ShotUp', type: 'unity', icon: '🎯' },
-      { slug: 'community-board', title: 'CommunityBoard', type: 'web', icon: '💬' },
-      { slug: 'cookie-clicker', title: 'Cookie Clicker', type: 'server', icon: '🍪' },
-      { slug: 'kirdia-simulator', title: 'Kirdia Simulator', type: 'docs', icon: '📖' },
-      { slug: 'gamedevtoolkit', title: 'GameDevToolkit', type: 'package', icon: '🧰' },
-    ];
-
-    const projectTypes = [
-      { value: 'unity', label: 'Unity', icon: '🎮' },
-      { value: 'web', label: 'Web', icon: '🌐' },
-      { value: 'package', label: 'Package', icon: '📦' },
-      { value: 'server', label: 'Server', icon: '🖥️' },
-      { value: 'docs', label: 'Docs', icon: '📄' },
-    ];
 
     function toggleMenu() {
       menuToggle.classList.toggle('active');
       filterMenu.classList.toggle('open');
     }
 
-    menuToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
+    menuToggle.addEventListener('click', toggleMenu);
+    closeBtn.addEventListener('click', toggleMenu);
 
-    closeBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
-
-    document.addEventListener('click', function(e) {
-      if (filterMenu && menuToggle && !filterMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+    document.addEventListener('click', (e) => {
+      if (!filterMenu.contains(e.target) && !menuToggle.contains(e.target)) {
         filterMenu.classList.remove('open');
         menuToggle.classList.remove('active');
       }
     });
 
-    if (filterMenu) {
-      filterMenu.addEventListener('click', function(e) {
-        e.stopPropagation();
-      });
-    }
+    filterMenu.addEventListener('click', (e) => e.stopPropagation());
 
-    // 트리 구조 렌더링
-    function renderProjectTree() {
-      if (!projectTree) {
-        console.error('projectTree not found');
-        return;
-      }
-
+    function renderTree() {
+      if (!projectTree) return;
       projectTree.innerHTML = '';
 
-      projectTypes.forEach(function(type) {
-        const typeProjects = projects.filter(function(p) { 
-          return p.type === type.value; 
-        });
+      projectTypes.forEach(type => {
+        const typeProjects = projects.filter(p => p.type === type.value);
         if (typeProjects.length === 0) return;
 
         const folder = document.createElement('div');
         folder.className = 'tree-folder';
-        
-        // 헤더 생성
+
         const header = document.createElement('div');
         header.className = 'tree-folder-header';
-        
-        const arrow = document.createElement('span');
-        arrow.className = 'tree-folder-arrow';
-        arrow.textContent = '▶';
-        
-        const icon = document.createElement('span');
-        icon.className = 'tree-folder-icon';
-        icon.textContent = type.icon;
-        
-        const label = document.createElement('span');
-        label.className = 'tree-folder-label';
-        label.textContent = type.label;
-        
-        const count = document.createElement('span');
-        count.className = 'tree-folder-count';
-        count.textContent = typeProjects.length;
-        
-        header.appendChild(arrow);
-        header.appendChild(icon);
-        header.appendChild(label);
-        header.appendChild(count);
-        
-        // 자식 항목 생성
+        header.innerHTML = `
+          <span class="tree-folder-arrow">▶</span>
+          <span class="tree-folder-icon">${type.icon}</span>
+          <span class="tree-folder-label">${type.label}</span>
+          <span class="tree-folder-count">${typeProjects.length}</span>
+        `;
+
         const children = document.createElement('div');
         children.className = 'tree-children';
-        
-        typeProjects.forEach(function(project) {
+
+        typeProjects.forEach(project => {
           const item = document.createElement('a');
           item.className = 'tree-item';
-          item.href = '/projects/' + project.slug;
-          
-          const itemIcon = document.createElement('span');
-          itemIcon.className = 'tree-item-icon';
-          itemIcon.textContent = project.icon;
-          
-          const itemLabel = document.createElement('span');
-          itemLabel.className = 'tree-item-label';
-          itemLabel.textContent = project.title;
-          
-          const itemType = document.createElement('span');
-          itemType.className = 'tree-item-type';
-          itemType.textContent = type.label;
-          
-          item.appendChild(itemIcon);
-          item.appendChild(itemLabel);
-          item.appendChild(itemType);
-          
+          item.href = `/projects/${project.slug}`;
+          item.innerHTML = `
+            <span class="tree-item-icon">${project.icon}</span>
+            <span class="tree-item-label">${project.title}</span>
+            <span class="tree-item-type">${type.label}</span>
+          `;
           children.appendChild(item);
         });
 
@@ -439,34 +387,30 @@ const pathname = Astro.url.pathname;
         folder.appendChild(children);
         projectTree.appendChild(folder);
 
-        // 폴더 클릭 이벤트 - 따로 함수로 분리
-        header.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleFolder(header, children, arrow);
-        });
+        header.addEventListener('click', () => toggleFolder(header, children));
       });
     }
 
-    // 폴더 토글 함수
-    function toggleFolder(header, children, arrow) {
+    function toggleFolder(header, children) {
       const isExpanded = children.classList.contains('expanded');
       
-      // 모든 폴더 닫기
-      document.querySelectorAll('.tree-children.expanded').forEach(function(el) {
+      // Close all folders
+      document.querySelectorAll('.tree-children.expanded').forEach(el => {
         el.classList.remove('expanded');
-        const siblingArrow = el.previousElementSibling ? el.previousElementSibling.querySelector('.tree-folder-arrow') : null;
-        if (siblingArrow) siblingArrow.classList.remove('expanded');
+        const arrow = el.previousElementSibling?.querySelector('.tree-folder-arrow');
+        if (arrow) arrow.classList.remove('expanded');
       });
-      
-      // 현재 폴더 토글
+
+      // Toggle current folder
       if (!isExpanded) {
         children.classList.add('expanded');
-        arrow.classList.add('expanded');
+        const arrow = header.querySelector('.tree-folder-arrow');
+        if (arrow) arrow.classList.add('expanded');
       }
     }
 
-    // 초기 렌더링
-    renderProjectTree();
-  });
+    renderTree();
+  }
+
+  initMenu();
 </script>
