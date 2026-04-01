@@ -1,15 +1,15 @@
 ---
 title: Community Board
 type: web
-description: Next.js로 개발한 커뮤니티 게시판. 사용자 인터랙션과 커뮤니티 기능 제공.
+description: Next.js 로 개발한 커뮤니티 게시판. 사용자 인증, 게시글 CRUD, Prisma ORM 사용.
 image: /images/community-board.png
 technologies:
   - Next.js
   - TypeScript
   - Tailwind CSS
   - Prisma
+  - NextAuth
 github: https://github.com/rlaehdduf/CommunityBoard
-demo: https://rlaehdduf.github.io/community-board
 featured: false
 ---
 

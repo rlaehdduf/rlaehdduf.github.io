@@ -1,15 +1,14 @@
 ---
 title: Kirdia Simulator
-type: web
-description: 키르디아 웹소설 세계관 시뮬레이터. AI 캐릭터 Role-play 시스템으로 GM 스타일 스토리 진행.
+type: docs
+description: 키르디아 웹소설 세계관 문서. AI 캐릭터 Role-play 시스템 설계 및 스토리 라인.
 image: /images/kirdia-simulator.png
 technologies:
-  - Node.js
-  - JavaScript
-  - AI Agent System
-  - Role-play
+  - Markdown
+  - Worldbuilding
+  - AI Agent Design
+  - Role-play System
 github: https://github.com/rlaehdduf/KirdiaSimulator
-demo: https://rlaehdduf.github.io/KirdiaSimulator
 featured: false
 ---
 

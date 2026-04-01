@@ -1,16 +1,15 @@
 ---
 title: Cookie Clicker
-type: web
-description: 웹으로 구현한 쿠키클리커 게임. 클릭 기반 인크리멘털 게임 메카닉.
+type: server
+description: Express.js 로 구현한 쿠키클리커 게임. 서버 기반 세션 관리와 데이터 저장.
 image: /images/cookie-clicker.png
 technologies:
+  - Node.js
+  - Express.js
   - JavaScript
-  - HTML5
-  - CSS3
-  - Game Logic
+  - Session Management
 github: https://github.com/rlaehdduf/CookieClicker
-demo: https://rlaehdduf.github.io/CookieClicker
-featured: true
+featured: false
 ---
 
 ## 게임 개요
