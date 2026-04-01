@@ -8,7 +8,8 @@ technologies:
   - C#
   - AI Navigation
   - Pathfinding
-github: https://github.com/yourusername/Pathfinder
+github: https://github.com/rlaehdduf/Pathfinder
+demo: https://rlaehdduf.github.io/Pathfinder
 featured: false
 ---
 

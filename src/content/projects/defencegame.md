@@ -7,7 +7,8 @@ technologies:
   - Unity
   - C#
   - Tower Defense Mechanics
-github: https://github.com/yourusername/DefenceGame
+github: https://github.com/rlaehdduf/DefenceGame
+demo: https://rlaehdduf.github.io/DefenceGame
 featured: true
 ---
 

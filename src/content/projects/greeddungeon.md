@@ -8,7 +8,8 @@ technologies:
   - C#
   - Roguelite
   - DI System
-github: https://github.com/yourusername/GreedDungeon
+github: https://github.com/rlaehdduf/GreedDungeon
+demo: https://rlaehdduf.github.io/GreedDungeon
 featured: true
 ---
 

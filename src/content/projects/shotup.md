@@ -7,7 +7,8 @@ technologies:
   - Unity
   - C#
   - Top-down Shooter
-github: https://github.com/yourusername/ShotUp
+github: https://github.com/rlaehdduf/ShotUp
+demo: https://rlaehdduf.github.io/ShotUp
 featured: false
 ---
 
