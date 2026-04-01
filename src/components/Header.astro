@@ -22,7 +22,6 @@ const pathname = Astro.url.pathname;
     
     <div class="filter-content">
       <p class="menu-hint">폴더 클릭: 확장/접기<br>프로젝트 클릭: 이동</p>
-      
       <div class="project-tree" id="projectTree"></div>
     </div>
   </div>
@@ -257,28 +256,31 @@ const pathname = Astro.url.pathname;
     background: rgba(45, 47, 50, 0.5);
     display: flex;
     flex-direction: column;
+    padding: 0;
+    margin: 0;
+    list-style: none;
   }
 
   .tree-children.expanded {
     max-height: 800px;
     border-top: 1px solid rgba(90, 93, 96, 0.3);
+    padding: 0.5rem 0;
   }
 
   .tree-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.625rem 1rem;
+    padding: 0.625rem 1rem 0.625rem 2.5rem;
     cursor: pointer;
     transition: all 0.2s;
     text-decoration: none;
-    border-left: 2px solid transparent;
     width: 100%;
+    box-sizing: border-box;
   }
 
   .tree-item:hover {
     background: rgba(90, 93, 96, 0.4);
-    border-left-color: rgba(120, 123, 126, 0.6);
   }
 
   .tree-item-icon {
@@ -286,6 +288,7 @@ const pathname = Astro.url.pathname;
     display: inline-block;
     width: 20px;
     text-align: center;
+    flex-shrink: 0;
   }
 
   .tree-item-label {
@@ -293,124 +296,125 @@ const pathname = Astro.url.pathname;
     font-size: 0.85rem;
     flex: 1;
     text-align: left;
-  }
-
-  .tree-item-type {
-    font-size: 0.65rem;
-    color: #9ca3af;
-    background: rgba(70, 72, 75, 0.5);
-    padding: 0.125rem 0.5rem;
-    border-radius: 6px;
-    border: 1px solid rgba(100, 103, 106, 0.3);
+    white-space: normal;
+    word-break: break-word;
   }
 </style>
 
-<script client:load>
-  const projects = [
-    { slug: 'defencegame', title: 'DefenceGame', type: 'unity', icon: '🎯' },
-    { slug: 'greeddungeon', title: 'GreedDungeon', type: 'unity', icon: '⚔️' },
-    { slug: 'pathfinder', title: 'Pathfinder', type: 'unity', icon: '🗺️' },
-    { slug: 'shotup', title: 'ShotUp', type: 'unity', icon: '🎯' },
-    { slug: 'community-board', title: 'CommunityBoard', type: 'web', icon: '💬' },
-    { slug: 'cookie-clicker', title: 'Cookie Clicker', type: 'server', icon: '🍪' },
-    { slug: 'kirdia-simulator', title: 'Kirdia Simulator', type: 'docs', icon: '📖' },
-    { slug: 'gamedevtoolkit', title: 'GameDevToolkit', type: 'package', icon: '🧰' },
-  ];
+<script>
+  if (typeof window !== 'undefined') {
+    window.initProjectMenu = function() {
+      const projects = [
+        { slug: 'defencegame', title: 'DefenceGame', type: 'unity', icon: '🎯' },
+        { slug: 'greeddungeon', title: 'GreedDungeon', type: 'unity', icon: '⚔️' },
+        { slug: 'pathfinder', title: 'Pathfinder', type: 'unity', icon: '🗺️' },
+        { slug: 'shotup', title: 'ShotUp', type: 'unity', icon: '🎯' },
+        { slug: 'community-board', title: 'CommunityBoard', type: 'web', icon: '💬' },
+        { slug: 'cookie-clicker', title: 'Cookie Clicker', type: 'server', icon: '🍪' },
+        { slug: 'kirdia-simulator', title: 'Kirdia Simulator', type: 'docs', icon: '📖' },
+        { slug: 'gamedevtoolkit', title: 'GameDevToolkit', type: 'package', icon: '🧰' },
+      ];
 
-  const projectTypes = [
-    { value: 'unity', label: 'Unity', icon: '🎮' },
-    { value: 'web', label: 'Web', icon: '🌐' },
-    { value: 'package', label: 'Package', icon: '📦' },
-    { value: 'server', label: 'Server', icon: '🖥️' },
-    { value: 'docs', label: 'Docs', icon: '📄' },
-  ];
+      const projectTypes = [
+        { value: 'unity', label: 'Unity', icon: '🎮' },
+        { value: 'web', label: 'Web', icon: '🌐' },
+        { value: 'package', label: 'Package', icon: '📦' },
+        { value: 'server', label: 'Server', icon: '🖥️' },
+        { value: 'docs', label: 'Docs', icon: '📄' },
+      ];
 
-  function initMenu() {
-    const menuToggle = document.getElementById('menuToggle');
-    const filterMenu = document.getElementById('filterMenu');
-    const closeBtn = document.getElementById('closeBtn');
-    const projectTree = document.getElementById('projectTree');
+      const menuToggle = document.getElementById('menuToggle');
+      const filterMenu = document.getElementById('filterMenu');
+      const closeBtn = document.getElementById('closeBtn');
+      const projectTree = document.getElementById('projectTree');
 
-    function toggleMenu() {
-      menuToggle.classList.toggle('active');
-      filterMenu.classList.toggle('open');
-    }
-
-    menuToggle.addEventListener('click', toggleMenu);
-    closeBtn.addEventListener('click', toggleMenu);
-
-    document.addEventListener('click', (e) => {
-      if (!filterMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-        filterMenu.classList.remove('open');
-        menuToggle.classList.remove('active');
+      if (!menuToggle || !filterMenu || !projectTree) {
+        console.error('Menu elements not found');
+        return;
       }
-    });
 
-    filterMenu.addEventListener('click', (e) => e.stopPropagation());
+      function toggleMenu() {
+        menuToggle.classList.toggle('active');
+        filterMenu.classList.toggle('open');
+      }
 
-    function renderTree() {
-      if (!projectTree) return;
-      projectTree.innerHTML = '';
+      menuToggle.addEventListener('click', toggleMenu);
+      if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
 
-      projectTypes.forEach(type => {
-        const typeProjects = projects.filter(p => p.type === type.value);
-        if (typeProjects.length === 0) return;
+      document.addEventListener('click', (e) => {
+        if (!filterMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+          filterMenu.classList.remove('open');
+          menuToggle.classList.remove('active');
+        }
+      });
 
-        const folder = document.createElement('div');
-        folder.className = 'tree-folder';
+      filterMenu.addEventListener('click', (e) => e.stopPropagation());
 
-        const header = document.createElement('div');
-        header.className = 'tree-folder-header';
-        header.innerHTML = `
-          <span class="tree-folder-arrow">▶</span>
-          <span class="tree-folder-icon">${type.icon}</span>
-          <span class="tree-folder-label">${type.label}</span>
-          <span class="tree-folder-count">${typeProjects.length}</span>
-        `;
+      function renderTree() {
+        projectTree.innerHTML = '';
 
-        const children = document.createElement('div');
-        children.className = 'tree-children';
+        projectTypes.forEach(type => {
+          const typeProjects = projects.filter(p => p.type === type.value);
+          if (typeProjects.length === 0) return;
 
-        typeProjects.forEach(project => {
-          const item = document.createElement('a');
-          item.className = 'tree-item';
-          item.href = `/projects/${project.slug}`;
-          item.innerHTML = `
-            <span class="tree-item-icon">${project.icon}</span>
-            <span class="tree-item-label">${project.title}</span>
-            <span class="tree-item-type">${type.label}</span>
+          const folder = document.createElement('div');
+          folder.className = 'tree-folder';
+
+          const header = document.createElement('div');
+          header.className = 'tree-folder-header';
+          header.innerHTML = `
+            <span class="tree-folder-arrow">▶</span>
+            <span class="tree-folder-icon">${type.icon}</span>
+            <span class="tree-folder-label">${type.label}</span>
+            <span class="tree-folder-count">${typeProjects.length}</span>
           `;
-          children.appendChild(item);
+
+          const children = document.createElement('div');
+          children.className = 'tree-children';
+
+          typeProjects.forEach(project => {
+            const item = document.createElement('a');
+            item.className = 'tree-item';
+            item.href = `/projects/${project.slug}`;
+            item.innerHTML = `
+              <span class="tree-item-icon">${project.icon}</span>
+              <span class="tree-item-label">${project.title}</span>
+            `;
+            children.appendChild(item);
+          });
+
+          folder.appendChild(header);
+          folder.appendChild(children);
+          projectTree.appendChild(folder);
+
+          header.addEventListener('click', () => {
+            const isExpanded = children.classList.contains('expanded');
+            
+            // Close all
+            document.querySelectorAll('.tree-children.expanded').forEach(el => {
+              el.classList.remove('expanded');
+              const arr = el.previousElementSibling?.querySelector('.tree-folder-arrow');
+              if (arr) arr.classList.remove('expanded');
+            });
+
+            // Open current
+            if (!isExpanded) {
+              children.classList.add('expanded');
+              const arrow = header.querySelector('.tree-folder-arrow');
+              if (arrow) arrow.classList.add('expanded');
+            }
+          });
         });
-
-        folder.appendChild(header);
-        folder.appendChild(children);
-        projectTree.appendChild(folder);
-
-        header.addEventListener('click', () => toggleFolder(header, children));
-      });
-    }
-
-    function toggleFolder(header, children) {
-      const isExpanded = children.classList.contains('expanded');
-      
-      // Close all folders
-      document.querySelectorAll('.tree-children.expanded').forEach(el => {
-        el.classList.remove('expanded');
-        const arrow = el.previousElementSibling?.querySelector('.tree-folder-arrow');
-        if (arrow) arrow.classList.remove('expanded');
-      });
-
-      // Toggle current folder
-      if (!isExpanded) {
-        children.classList.add('expanded');
-        const arrow = header.querySelector('.tree-folder-arrow');
-        if (arrow) arrow.classList.add('expanded');
       }
+
+      renderTree();
+    };
+
+    // Run on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.initProjectMenu);
+    } else {
+      window.initProjectMenu();
     }
-
-    renderTree();
   }
-
-  initMenu();
 </script>
