@@ -8,8 +8,8 @@ technologies:
   - C#
   - Physics-based
   - 2D Physics
-github: https://github.com/rlaehdduf/ShotUp
-demo: https://rlaehdduf.github.io/ShotUp
+github: https://github.com/kongnamul-muchim/ShotUp
+demo: https://kongnamul-muchim.github.io/ShotUp
 featured: false
 devPeriod: "2026-03-09 ~ 2026-03-10"
 ---

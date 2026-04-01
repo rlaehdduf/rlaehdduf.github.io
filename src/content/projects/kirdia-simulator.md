@@ -8,7 +8,7 @@ technologies:
   - Worldbuilding
   - AI Agent System
   - Event-driven Design
-github: https://github.com/rlaehdduf/KirdiaSimulator
+github: https://github.com/kongnamul-muchim/KirdiaSimulator
 featured: false
 devPeriod: "2026-03-30"
 ---

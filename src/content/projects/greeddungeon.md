@@ -8,8 +8,8 @@ technologies:
   - C#
   - Roguelite
   - Turn-based Combat
-github: https://github.com/rlaehdduf/GreedDungeon
-demo: https://rlaehdduf.github.io/GreedDungeon
+github: https://github.com/kongnamul-muchim/GreedDungeon
+demo: https://kongnamul-muchim.github.io/GreedDungeon
 featured: true
 devPeriod: "2026-03-19 ~ 2026-03-27"
 ---

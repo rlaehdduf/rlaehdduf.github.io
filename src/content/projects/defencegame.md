@@ -8,8 +8,8 @@ technologies:
   - C#
   - Tower Defense
   - Special Ability System
-github: https://github.com/rlaehdduf/DefenceGame
-demo: https://rlaehdduf.github.io/DefenceGame
+github: https://github.com/kongnamul-muchim/DefenceGame
+demo: https://kongnamul-muchim.github.io/DefenceGame
 featured: true
 devPeriod: "2026-03-09 ~ 2026-03-12"
 ---

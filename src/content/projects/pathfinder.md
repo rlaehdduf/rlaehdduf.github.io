@@ -8,8 +8,8 @@ technologies:
   - C#
   - Metroidvania
   - Custom DI Container
-github: https://github.com/rlaehdduf/Pathfinder
-demo: https://rlaehdduf.github.io/Pathfinder
+github: https://github.com/kongnamul-muchim/Pathfinder
+demo: https://kongnamul-muchim.github.io/Pathfinder
 featured: false
 devPeriod: "2026-03-16 ~ 2026-03-19"
 ---

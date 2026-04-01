@@ -9,7 +9,7 @@ technologies:
   - Tailwind CSS
   - Prisma
   - NextAuth
-github: https://github.com/rlaehdduf/CommunityBoard
+github: https://github.com/kongnamul-muchim/CommunityBoard
 featured: false
 devPeriod: "2026-03-30"
 ---

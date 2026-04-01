@@ -8,7 +8,7 @@ technologies:
   - Express.js
   - SQLite (sql.js)
   - express-session
-github: https://github.com/rlaehdduf/CookieClicker
+github: https://github.com/kongnamul-muchim/CookieClicker
 featured: false
 devPeriod: "2026-03-30 ~ 2026-03-31"
 ---

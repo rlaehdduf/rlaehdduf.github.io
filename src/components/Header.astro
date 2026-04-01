@@ -1,13 +1,13 @@
 ---
 const pathname = Astro.url.pathname;
 
-// 프로젝트 타입별 정보
+// 프로젝트 타입별 그룹화 (동적으로 생성)
 const projectTypes = [
-  { value: 'unity', label: 'Unity', count: 4 },
-  { value: 'web', label: 'Web', count: 1 },
-  { value: 'package', label: 'Package', count: 1 },
-  { value: 'server', label: 'Server', count: 1 },
-  { value: 'docs', label: 'Docs', count: 1 },
+  { value: 'unity', label: 'Unity', icon: '🎮' },
+  { value: 'web', label: 'Web', icon: '🌐' },
+  { value: 'package', label: 'Package', icon: '📦' },
+  { value: 'server', label: 'Server', icon: '🖥️' },
+  { value: 'docs', label: 'Docs', icon: '📄' },
 ];
 ---
 
@@ -25,42 +25,15 @@ const projectTypes = [
   
   <div class="filter-menu" id="filterMenu">
     <div class="filter-header">
-      <h3>🔍 필터</h3>
+      <h3>📂 Projects</h3>
       <button class="close-btn" id="closeBtn" aria-label="Close menu">&times;</button>
     </div>
     
     <div class="filter-content">
-      <!-- All 옵션 -->
-      <div class="filter-item">
-        <label class="filter-label">
-          <input type="checkbox" value="all" checked id="allCheckbox">
-          <span class="filter-label-text">📋 All Projects</span>
-        </label>
-      </div>
+      <p class="menu-hint">클릭하여 폴더 확장/프로젝트 이동</p>
       
-      <!-- 타입별 폴더 구조 -->
-      <div class="filter-section">
-        <button class="folder-toggle" id="folderToggle">
-          <span class="folder-icon">📁</span>
-          <span>By Type</span>
-          <span class="folder-arrow">▼</span>
-        </button>
-        
-        <div class="folder-content" id="folderContent">
-          {projectTypes.map((type) => (
-            <label class="filter-option">
-              <input type="checkbox" value={type.value}>
-              <span class="type-icon">📄</span>
-              <span class="type-name">{type.label}</span>
-              <span class="type-count">({type.count})</span>
-            </label>
-          ))}
-        </div>
-      </div>
-      
-      <div class="filter-info">
-        <p>✅ 체크된 타입만 표시</p>
-        <p>🔄 All 이 체크되면 전체 표시</p>
+      <div class="project-tree" id="projectTree">
+        <!-- 자바스크립트로 동적 생성 -->
       </div>
     </div>
   </div>
@@ -88,12 +61,12 @@ const projectTypes = [
   .nav-link {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--text);
+    color: #e5e7eb;
     text-decoration: none;
   }
 
   .nav-link:hover {
-    color: var(--primary);
+    color: #ffffff;
   }
 
   .menu-toggle {
@@ -214,141 +187,120 @@ const projectTypes = [
     padding: 1rem;
   }
 
-  .filter-item {
+  .menu-hint {
+    color: #9ca3af;
+    font-size: 0.75rem;
     margin-bottom: 1rem;
-    padding: 0.75rem;
-    background: rgba(70, 72, 75, 0.4);
-    border-radius: 8px;
-    border: 1px solid rgba(90, 93, 96, 0.4);
+    padding: 0.5rem;
+    background: rgba(70, 72, 75, 0.3);
+    border-radius: 6px;
+    text-align: center;
   }
 
-  .filter-label {
+  .project-tree {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    font-weight: 600;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
-  .filter-label input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: #9ca3af;
-    cursor: pointer;
+  .tree-folder {
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(60, 62, 65, 0.4);
+    border: 1px solid rgba(90, 93, 96, 0.3);
   }
 
-  .filter-label-text {
-    color: #e5e7eb;
-    font-size: 1rem;
-  }
-
-  .filter-section {
-    margin-bottom: 1rem;
-  }
-
-  .folder-toggle {
-    width: 100%;
+  .tree-folder-header {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(80, 82, 85, 0.5);
-    border: 1px solid rgba(100, 103, 106, 0.5);
     padding: 0.75rem 1rem;
-    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
-    color: #e5e7eb;
-    font-size: 0.95rem;
-    font-weight: 500;
-  }
-
-  .folder-toggle:hover {
-    background: rgba(90, 93, 96, 0.5);
-    border-color: rgba(110, 113, 116, 0.6);
-  }
-
-  .folder-icon {
-    font-size: 1.25rem;
-  }
-
-  .folder-arrow {
-    margin-left: auto;
-    transition: transform 0.3s ease;
-    font-size: 0.75rem;
-  }
-
-  .folder-toggle.active .folder-arrow {
-    transform: rotate(180deg);
-  }
-
-  .folder-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: rgba(50, 52, 55, 0.4);
-    border-radius: 8px;
-    margin-top: 0.5rem;
-  }
-
-  .folder-content.open {
-    max-height: 500px;
-    padding: 0.5rem;
-  }
-
-  .filter-option {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    cursor: pointer;
-    padding: 0.625rem 0.75rem;
-    border-radius: 6px;
     transition: background 0.2s;
-    margin-bottom: 0.25rem;
+    user-select: none;
   }
 
-  .filter-option:hover {
+  .tree-folder-header:hover {
     background: rgba(80, 82, 85, 0.5);
   }
 
-  .filter-option input[type="checkbox"] {
+  .tree-folder-arrow {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    transition: transform 0.3s ease;
     width: 16px;
-    height: 16px;
-    accent-color: #9ca3af;
-    cursor: pointer;
-    flex-shrink: 0;
+    text-align: center;
   }
 
-  .type-icon {
-    font-size: 1rem;
+  .tree-folder-arrow.expanded {
+    transform: rotate(90deg);
   }
 
-  .type-name {
+  .tree-folder-icon {
+    font-size: 1.125rem;
+  }
+
+  .tree-folder-label {
+    flex: 1;
     color: #e5e7eb;
     font-size: 0.9rem;
-    flex: 1;
+    font-weight: 600;
   }
 
-  .type-count {
+  .tree-folder-count {
     color: #9ca3af;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     background: rgba(80, 82, 85, 0.5);
     padding: 0.125rem 0.5rem;
     border-radius: 10px;
     border: 1px solid rgba(100, 103, 106, 0.3);
   }
 
-  .filter-info {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background: rgba(60, 62, 65, 0.4);
-    border-radius: 8px;
-    border: 1px solid rgba(90, 93, 96, 0.3);
-    font-size: 0.75rem;
-    color: #9ca3af;
+  .tree-children {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background: rgba(45, 47, 50, 0.5);
   }
 
-  .filter-info p {
-    margin: 0.25rem 0;
+  .tree-children.expanded {
+    max-height: 500px;
+    border-top: 1px solid rgba(90, 93, 96, 0.3);
+  }
+
+  .tree-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    margin-left: 1rem;
+  }
+
+  .tree-item:hover {
+    background: rgba(90, 93, 96, 0.4);
+    border-left-color: rgba(120, 123, 126, 0.6);
+  }
+
+  .tree-item-icon {
+    font-size: 0.875rem;
+  }
+
+  .tree-item-label {
+    color: #e5e7eb;
+    font-size: 0.85rem;
+    flex: 1;
+  }
+
+  .tree-item-type {
+    font-size: 0.65rem;
+    color: #9ca3af;
+    background: rgba(70, 72, 75, 0.5);
+    padding: 0.125rem 0.5rem;
+    border-radius: 6px;
   }
 </style>
 
@@ -356,21 +308,31 @@ const projectTypes = [
   const menuToggle = document.getElementById('menuToggle');
   const filterMenu = document.getElementById('filterMenu');
   const closeBtn = document.getElementById('closeBtn');
-  const folderToggle = document.getElementById('folderToggle');
-  const folderContent = document.getElementById('folderContent');
-  const allCheckbox = document.getElementById('allCheckbox');
-  const typeCheckboxes = filterMenu ? filterMenu.querySelectorAll('.filter-option input[type="checkbox"]') : [];
+  const projectTree = document.getElementById('projectTree');
 
-  console.log('Header script loaded');
+  // 프로젝트 데이터 (하드코딩 - 실제 프로젝트에 맞게 수정)
+  const projects = [
+    { slug: 'defencegame', title: 'DefenceGame', type: 'unity', icon: '🎯' },
+    { slug: 'greeddungeon', title: 'GreedDungeon', type: 'unity', icon: '⚔️' },
+    { slug: 'pathfinder', title: 'Pathfinder', type: 'unity', icon: '🗺️' },
+    { slug: 'shotup', title: 'ShotUp', type: 'unity', icon: '🎯' },
+    { slug: 'community-board', title: 'CommunityBoard', type: 'web', icon: '💬' },
+    { slug: 'cookie-clicker', title: 'Cookie Clicker', type: 'server', icon: '🍪' },
+    { slug: 'kirdia-simulator', title: 'Kirdia Simulator', type: 'docs', icon: '📖' },
+    { slug: 'gamedevtoolkit', title: 'GameDevToolkit', type: 'package', icon: '🧰' },
+  ];
+
+  const projectTypes = [
+    { value: 'unity', label: 'Unity', icon: '🎮' },
+    { value: 'web', label: 'Web', icon: '🌐' },
+    { value: 'package', label: 'Package', icon: '📦' },
+    { value: 'server', label: 'Server', icon: '🖥️' },
+    { value: 'docs', label: 'Docs', icon: '📄' },
+  ];
 
   function toggleMenu() {
     menuToggle.classList.toggle('active');
     filterMenu.classList.toggle('open');
-  }
-
-  function toggleFolder() {
-    folderToggle.classList.toggle('active');
-    folderContent.classList.toggle('open');
   }
 
   menuToggle.addEventListener('click', function(e) {
@@ -380,8 +342,6 @@ const projectTypes = [
   });
 
   closeBtn.addEventListener('click', toggleMenu);
-
-  folderToggle.addEventListener('click', toggleFolder);
 
   document.addEventListener('click', function(e) {
     if (!filterMenu.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -394,43 +354,60 @@ const projectTypes = [
     e.stopPropagation();
   });
 
-  allCheckbox.addEventListener('change', function() {
-    if (allCheckbox.checked) {
-      typeCheckboxes.forEach(cb => cb.checked = false);
-      updateFilters(['all']);
-    } else {
-      allCheckbox.checked = true;
-    }
-  });
+  // 트리 구조 렌더링
+  function renderProjectTree() {
+    if (!projectTree) return;
 
-  typeCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-      if (this.checked) {
-        allCheckbox.checked = false;
-      }
-      
-      const selectedTypes = Array.from(typeCheckboxes)
-        .filter(cb => cb.checked)
-        .map(cb => cb.value);
-      
-      if (selectedTypes.length === 0) {
-        allCheckbox.checked = true;
-        updateFilters(['all']);
-      } else {
-        updateFilters(selectedTypes);
-      }
-    });
-  });
+    projectTree.innerHTML = '';
 
-  function updateFilters(types) {
-    const cards = document.querySelectorAll('.project-card');
-    cards.forEach(card => {
-      const projectType = card.getAttribute('data-type');
-      if (types.includes('all') || types.includes(projectType)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
+    projectTypes.forEach(type => {
+      const typeProjects = projects.filter(p => p.type === type.value);
+      if (typeProjects.length === 0) return;
+
+      const folder = document.createElement('div');
+      folder.className = 'tree-folder';
+      folder.innerHTML = `
+        <div class="tree-folder-header" data-type="${type.value}">
+          <span class="tree-folder-arrow">▶</span>
+          <span class="tree-folder-icon">${type.icon}</span>
+          <span class="tree-folder-label">${type.label}</span>
+          <span class="tree-folder-count">${typeProjects.length}</span>
+        </div>
+        <div class="tree-children" data-type="${type.value}">
+          ${typeProjects.map(project => `
+            <a href="/projects/${project.slug}" class="tree-item">
+              <span class="tree-item-icon">${project.icon}</span>
+              <span class="tree-item-label">${project.title}</span>
+              <span class="tree-item-type">${type.label}</span>
+            </a>
+          `).join('')}
+        </div>
+      `;
+
+      projectTree.appendChild(folder);
+
+      // 폴더 클릭 이벤트
+      const header = folder.querySelector('.tree-folder-header');
+      const children = folder.querySelector('.tree-children');
+      const arrow = folder.querySelector('.tree-folder-arrow');
+
+      header.addEventListener('click', function() {
+        const isExpanded = children.classList.contains('expanded');
+        
+        // 다른 폴더들은 닫기 (원하면 이 부분 제거)
+        if (!isExpanded) {
+          document.querySelectorAll('.tree-children.expanded').forEach(el => {
+            el.classList.remove('expanded');
+            el.previousElementSibling.querySelector('.tree-folder-arrow').classList.remove('expanded');
+          });
+        }
+
+        children.classList.toggle('expanded');
+        arrow.classList.toggle('expanded');
+      });
     });
   }
+
+  // 초기 렌더링
+  renderProjectTree();
 </script>
