@@ -262,7 +262,7 @@
     }
 
     .bg-6 {
-      background: #0f172a;
+      background: linear-gradient(180deg, #f5f7fa 0%, #e4e8ec 100%);
     }
 
     .bg-6::after {
@@ -271,10 +271,10 @@
       width: 100%;
       height: 100%;
       background-image: 
-        radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px),
-        radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px);
-      background-size: 50px 50px;
-      background-position: 0 0, 25px 25px;
+        linear-gradient(rgba(100, 116, 139, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(100, 116, 139, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: 0 0, 0 0;
     }
 
     .bg-7 {
@@ -385,8 +385,8 @@
         <span>Option 6</span>
       </div>
       <div class="option-info">
-        <h3>도트 그리드</h3>
-        <p>다크 배경에 규칙적인 도트 패턴.</p>
+        <h3>오피스 화이트</h3>
+        <p>밝은 회색 그라데이션에 격자 패턴. 깔끔하고 전문적인 오피스 분위기.</p>
         <div class="btn-group">
           <button class="btn btn-preview" onclick="event.stopPropagation(); openPreview(6)">미리보기</button>
           <button class="btn btn-apply" onclick="event.stopPropagation(); applyBg(6)">적용하기</button>
@@ -469,9 +469,9 @@
         css: 'background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\nbackground-attachment: fixed;'
       },
       6: {
-        name: '도트 그리드',
-        desc: '다크 배경에 규칙적인 도트 패턴.',
-        css: 'background: #0f172a;\nbackground-image: \n  radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px),\n  radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px);\nbackground-size: 50px 50px;\nbackground-position: 0 0, 25px 25px;\nbackground-attachment: fixed;'
+        name: '오피스 화이트',
+        desc: '밝은 회색 그라데이션에 격자 패턴. 깔끔하고 전문적인 오피스 분위기.',
+        css: 'background: linear-gradient(180deg, #f5f7fa 0%, #e4e8ec 100%);\nbackground-image: \n  linear-gradient(rgba(100, 116, 139, 0.1) 1px, transparent 1px),\n  linear-gradient(90deg, rgba(100, 116, 139, 0.1) 1px, transparent 1px);\nbackground-size: 40px 40px;\nbackground-attachment: fixed;'
       },
       7: {
         name: '다크 그레이',

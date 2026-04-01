@@ -129,22 +129,22 @@ const pathname = Astro.url.pathname;
 
   .filter-menu {
     position: fixed;
-    top: 70px;
-    right: -300px;
-    width: 280px;
+    top: 80px;
+    right: -350px;
+    width: 300px;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     transition: right 0.3s ease;
-    z-index: 100;
-    max-height: calc(100vh - 100px);
+    z-index: 99;
+    max-height: calc(100vh - 120px);
     overflow-y: auto;
   }
 
   .filter-menu.open {
-    right: 2rem;
+    right: 20px;
   }
 
   .filter-header {
@@ -170,16 +170,24 @@ const pathname = Astro.url.pathname;
     cursor: pointer;
     padding: 0;
     line-height: 1;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s;
   }
 
   .close-btn:hover {
     color: var(--text);
+    background: var(--border);
   }
 
   .filter-options {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .filter-option {
@@ -187,9 +195,10 @@ const pathname = Astro.url.pathname;
     align-items: center;
     gap: 0.75rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.75rem;
     border-radius: 6px;
     transition: background 0.2s;
+    user-select: none;
   }
 
   .filter-option:hover {
@@ -201,100 +210,116 @@ const pathname = Astro.url.pathname;
     height: 18px;
     accent-color: var(--primary);
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .filter-option span {
     color: var(--text);
     font-size: 0.95rem;
+    flex: 1;
   }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuToggle = document.getElementById('menuToggle');
-    const filterMenu = document.getElementById('filterMenu');
-    const closeBtn = document.getElementById('closeBtn');
-    const checkboxes = filterMenu.querySelectorAll('input[type="checkbox"]');
-    const allCheckbox = checkboxes[0];
-    const typeCheckboxes = checkboxes.slice(1);
+  const menuToggle = document.getElementById('menuToggle');
+  const filterMenu = document.getElementById('filterMenu');
+  const closeBtn = document.getElementById('closeBtn');
+  
+  console.log('Header script loaded');
+  console.log('menuToggle:', menuToggle);
+  console.log('filterMenu:', filterMenu);
+  console.log('closeBtn:', closeBtn);
 
-    console.log('Menu toggle found:', menuToggle);
-    console.log('Filter menu found:', filterMenu);
+  function toggleMenu() {
+    console.log('toggleMenu called');
+    console.log('menuToggle classes before:', menuToggle?.className);
+    console.log('filterMenu classes before:', filterMenu?.className);
+    
+    menuToggle.classList.toggle('active');
+    filterMenu.classList.toggle('open');
+    
+    console.log('menuToggle classes after:', menuToggle?.className);
+    console.log('filterMenu classes after:', filterMenu?.className);
+  }
 
-    function toggleMenu() {
-      console.log('Toggling menu!');
-      menuToggle.classList.toggle('active');
-      filterMenu.classList.toggle('open');
-    }
-
-    if (menuToggle) {
-      menuToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleMenu();
-      });
-    }
-
-    if (closeBtn) {
-      closeBtn.addEventListener('click', toggleMenu);
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (filterMenu && !filterMenu.contains(e.target) && menuToggle && !menuToggle.contains(e.target)) {
-        filterMenu.classList.remove('open');
-        menuToggle.classList.remove('active');
-      }
+  if (menuToggle) {
+    menuToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('menuToggle clicked');
+      toggleMenu();
     });
+  }
 
-    // Prevent menu close when clicking inside menu
-    if (filterMenu) {
-      filterMenu.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
-    }
-
-    // Handle checkbox logic
-    if (allCheckbox) {
-      allCheckbox.addEventListener('change', () => {
-        if (allCheckbox.checked) {
-          typeCheckboxes.forEach(cb => cb.checked = false);
-          updateFilters(['all']);
-        } else {
-          allCheckbox.checked = true;
-        }
-      });
-    }
-
-    typeCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-          allCheckbox.checked = false;
-        }
-        
-        const selectedTypes = Array.from(typeCheckboxes)
-          .filter(cb => cb.checked)
-          .map(cb => cb.value);
-        
-        if (selectedTypes.length === 0) {
-          allCheckbox.checked = true;
-          updateFilters(['all']);
-        } else {
-          updateFilters(selectedTypes);
-        }
-      });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('closeBtn clicked');
+      toggleMenu();
     });
+  }
 
-    function updateFilters(types) {
-      const cards = document.querySelectorAll('.project-card');
-      cards.forEach(card => {
-        const projectType = card.getAttribute('data-type');
-        if (types.includes('all') || types.includes(projectType)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+  document.addEventListener('click', function(e) {
+    if (filterMenu && !filterMenu.contains(e.target) && menuToggle && !menuToggle.contains(e.target)) {
+      console.log('click outside, closing menu');
+      filterMenu.classList.remove('open');
+      menuToggle.classList.remove('active');
     }
   });
+
+  if (filterMenu) {
+    filterMenu.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
+  const checkboxes = filterMenu ? filterMenu.querySelectorAll('input[type="checkbox"]') : [];
+  const allCheckbox = checkboxes[0];
+  const typeCheckboxes = Array.from(checkboxes).slice(1);
+
+  if (allCheckbox) {
+    allCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        typeCheckboxes.forEach(cb => cb.checked = false);
+        updateFilters(['all']);
+      } else {
+        this.checked = true;
+      }
+    });
+  }
+
+  typeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        allCheckbox.checked = false;
+      }
+      
+      const selectedTypes = typeCheckboxes
+        .filter(cb => cb.checked)
+        .map(cb => cb.value);
+      
+      if (selectedTypes.length === 0) {
+        allCheckbox.checked = true;
+        updateFilters(['all']);
+      } else {
+        updateFilters(selectedTypes);
+      }
+    });
+  });
+
+  function updateFilters(types) {
+    const cards = document.querySelectorAll('.project-card');
+    console.log('updateFilters called with:', types);
+    console.log('cards found:', cards.length);
+    
+    cards.forEach(card => {
+      const projectType = card.getAttribute('data-type');
+      if (types.includes('all') || types.includes(projectType)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
 </script>
