@@ -13,7 +13,7 @@ interface Props {
 const { title, description, image, technologies, slug, featured } = Astro.props;
 ---
 
-<a href={`./projects/${slug}`} class="project-card" data-featured={featured}>
+<a href={`/projects/${slug}`} class="project-card" data-featured={featured}>
   {image && (
     <div class="card-image">
       <img src={image} alt={title} loading="lazy" />
