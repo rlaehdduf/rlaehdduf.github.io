@@ -2,7 +2,7 @@
 title: GameDevToolkit
 type: package
 description: Unity 게임 개발을 위한 툴킷 패키지. 공통 기능을 모듈화하여 재사용 가능.
-image: /images/gamedevtoolkit.png
+image: /images/defult.jpeg
 technologies:
   - Unity
   - C#

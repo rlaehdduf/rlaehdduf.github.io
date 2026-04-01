@@ -2,7 +2,7 @@
 title: Kirdia Simulator
 type: docs
 description: 웹소설 세계관 시뮬레이터. AI GM 시스템, 캐릭터 Role-play, 분기 스토리.
-image: /images/kirdia-simulator.png
+image: /images/defult.jpeg
 technologies:
   - Markdown
   - Worldbuilding
