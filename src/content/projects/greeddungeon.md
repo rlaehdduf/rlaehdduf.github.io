@@ -1,13 +1,13 @@
 ---
 title: GreedDungeon
 type: unity
-description: Unity로 개발한 던전 탐험 게임. 로그라이트 요소를 포함한 액션 RPG.
+description: 2D 턴제 로그라이트 던전 크롤러. 행동 게이지 시스템, 장비/스킬/버프, 전투 비주얼 효과.
 image: /images/greeddungeon.png
 technologies:
   - Unity
   - C#
   - Roguelite
-  - DI System
+  - Turn-based Combat
 github: https://github.com/rlaehdduf/GreedDungeon
 demo: https://rlaehdduf.github.io/GreedDungeon
 featured: true
@@ -15,16 +15,36 @@ featured: true
 
 ## 게임 개요
 
-로그라이트 요소가 포함된 던전 탐험 게임입니다.
+Unity 2D 로 개발한 턴제 로그라이트 던전 크롤러 RPG 입니다. 행동 게이지 기반 전투와 풍부한 비주얼 효과를 특징으로 합니다.
 
-### 주요 기능
+### 주요 시스템
 
-- 던전 생성 시스템
-- 전투 및 스킬 시스템
-- 아이템 및 장비 시스템
-- 진행 상황 저장
+| 시스템 | 설명 |
+|--------|------|
+| **행동 게이지** | Speed 스탯에 따라 게이지 증가, 1000 도달 시 행동 |
+| **전투 시스템** | 속성/상태이상/스킬/버프 통합 관리 |
+| **장비 시스템** | 장비 착용/해제, 스탯 캐시 무효화 |
+| **던전 진행** | EncounterSystem, 보물방, 게임오버 처리 |
 
-### 특이점
+### 전투 비주얼
 
-- DI (Dependency Injection) 시스템 사용
-- GameDevToolkit 패키지 적용
+- 턴 전환 딜레이 및 공격 모션
+- 데미지 텍스트 UI (플레이어 빨간색)
+- 디버프 비네트 효과
+- 스킬 이펙트 및 배경 스크롤
+
+### 밸런스 데이터
+
+| 분류 | 내용 |
+|------|------|
+| **플레이어** | HP 70, MP 40, ATK 8, DEF 3 |
+| **장비** | HP/DEF 50% 감소 적용 |
+| **몬스터** | HP/ATK/DEF 20% 상향 |
+| **희귀도** | Legendary 2.0x 배율 |
+
+### 기술 특징
+
+- GameDevToolkit DI 시스템 사용
+- CSV 데이터 워크플로우 (Excel → CSV → ScriptableObject)
+- SOLID 원칙 준수 (클래스 300 행 제한)
+- 전투 시뮬레이터로 밸런스 검증
