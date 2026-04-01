@@ -11,7 +11,7 @@ technologies:
 github: https://github.com/rlaehdduf/GreedDungeon
 demo: https://rlaehdduf.github.io/GreedDungeon
 featured: true
-devPeriod: 2026-03-19 ~ 2026-03-27
+devPeriod: "2026-03-19 ~ 2026-03-27"
 ---
 
 ## 게임 개요
