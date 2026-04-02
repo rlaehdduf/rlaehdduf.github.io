@@ -1,0 +1,494 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Color Scheme Test">
+  <div class="test-page">
+    <h1>🎨 색상 조합 테스트</h1>
+    <p class="hint">각 섹션의 버튼과 카드를 클릭해서 hover 효과도 확인해보세요.</p>
+
+    <!-- 1. Cyberpunk Blue + Red -->
+    <section class="scheme cyberpunk-blue">
+      <h2>1. Cyberpunk Blue + Red 🔥</h2>
+      <p class="desc">Unity 게임 포트폴리오에 인기. 모던, 기술적 느낌.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <!-- 2. Gold + Orange (Game feel) -->
+    <section class="scheme gold-orange">
+      <h2>2. Gold + Orange 🎮</h2>
+      <p class="desc">게임 느낌. 따뜻하고 활기찬 톤.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <!-- 3. GitHub Style -->
+    <section class="scheme github-style">
+      <h2>3. GitHub Style 💻</h2>
+      <p class="desc">개발자 포트폴리오 인기. 프로, 깔끔한 느낌.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <!-- 4. Monochrome Gradient -->
+    <section class="scheme monochrome">
+      <h2>4. Monochrome Gradient 🌑</h2>
+      <p class="desc">색 없이 gradient만. 내용에 집중.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <!-- 5. Soft Dark + Warm -->
+    <section class="scheme warm-accent">
+      <h2>5. Soft Dark + Warm Accent 🌙</h2>
+      <p class="desc">편안한 느낌. 따뜻한 포인트.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <!-- 6. Neon Purple -->
+    <section class="scheme neon-purple">
+      <h2>6. Neon Purple + Cyan 💜</h2>
+      <p class="desc">독특한 느낌. 크리에이터, 아티스트 포트폴리오.</p>
+      
+      <div class="card-sample">
+        <h3>타워 디펜스 게임</h3>
+        <p>4 종 타워 배치, 레벨업, 특수 능력 해금 시스템.</p>
+        <div class="tech-badges">
+          <span class="badge">Unity</span>
+          <span class="badge">C#</span>
+          <span class="badge">Tower Defense</span>
+        </div>
+      </div>
+      
+      <div class="buttons">
+        <a class="btn-primary">GitHub Repository</a>
+        <a class="btn-demo">Live Demo</a>
+      </div>
+    </section>
+
+    <div class="back-home">
+      <a href="/">← Back to Home</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .test-page {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
+
+  .hint {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ===== Section Base ===== */
+  section {
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+  }
+
+  section h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  section .desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-sample {
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .card-sample h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-sample p {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .tech-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary, .btn-demo {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary:hover, .btn-demo:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ===== 1. Cyberpunk Blue + Red ===== */
+  .cyberpunk-blue {
+    background: linear-gradient(135deg, #0d0d0d 0%, #1a1a2e 50%, #16213e 100%);
+    border: 2px solid #00d9ff;
+  }
+
+  .cyberpunk-blue h2 { color: #00d9ff; }
+
+  .cyberpunk-blue .card-sample {
+    background: rgba(20, 30, 50, 0.8);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+  }
+
+  .cyberpunk-blue .card-sample h3 { color: #ffffff; }
+  .cyberpunk-blue .card-sample p { color: #b0b0b0; }
+
+  .cyberpunk-blue .badge {
+    background: rgba(0, 217, 255, 0.15);
+    border: 1px solid rgba(0, 217, 255, 0.4);
+    color: #00d9ff;
+  }
+
+  .cyberpunk-blue .btn-primary {
+    background: linear-gradient(135deg, #00d9ff 0%, #00a8cc 100%);
+    color: #0d0d0d;
+    border: 1px solid #00d9ff;
+  }
+
+  .cyberpunk-blue .btn-primary:hover {
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+  }
+
+  .cyberpunk-blue .btn-demo {
+    background: linear-gradient(135deg, #e94560 0%, #c73e54 100%);
+    color: #ffffff;
+    border: 1px solid #e94560;
+  }
+
+  .cyberpunk-blue .btn-demo:hover {
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+  }
+
+  /* ===== 2. Gold + Orange ===== */
+  .gold-orange {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1e1e1e 100%);
+    border: 2px solid #f39c12;
+  }
+
+  .gold-orange h2 { color: #f39c12; }
+
+  .gold-orange .card-sample {
+    background: rgba(30, 30, 30, 0.9);
+    border: 1px solid rgba(243, 156, 18, 0.3);
+  }
+
+  .gold-orange .card-sample h3 { color: #ffffff; }
+  .gold-orange .card-sample p { color: #b0b0b0; }
+
+  .gold-orange .badge {
+    background: rgba(243, 156, 18, 0.15);
+    border: 1px solid rgba(243, 156, 18, 0.4);
+    color: #f39c12;
+  }
+
+  .gold-orange .btn-primary {
+    background: linear-gradient(135deg, #f39c12 0%, #d68910 100%);
+    color: #1a1a1a;
+    border: 1px solid #f39c12;
+  }
+
+  .gold-orange .btn-primary:hover {
+    box-shadow: 0 0 20px rgba(243, 156, 18, 0.4);
+  }
+
+  .gold-orange .btn-demo {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: #ffffff;
+    border: 1px solid #e74c3c;
+  }
+
+  .gold-orange .btn-demo:hover {
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.4);
+  }
+
+  /* ===== 3. GitHub Style ===== */
+  .github-style {
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 50%, #010409 100%);
+    border: 2px solid #238636;
+  }
+
+  .github-style h2 { color: #58a6ff; }
+
+  .github-style .card-sample {
+    background: rgba(22, 27, 34, 0.9);
+    border: 1px solid rgba(48, 54, 61, 0.8);
+  }
+
+  .github-style .card-sample h3 { color: #ffffff; }
+  .github-style .card-sample p { color: #8b949e; }
+
+  .github-style .badge {
+    background: rgba(35, 134, 54, 0.15);
+    border: 1px solid rgba(35, 134, 54, 0.4);
+    color: #3fb950;
+  }
+
+  .github-style .btn-primary {
+    background: linear-gradient(135deg, #238636 0%, #1a7f37 100%);
+    color: #ffffff;
+    border: 1px solid #238636;
+  }
+
+  .github-style .btn-primary:hover {
+    box-shadow: 0 0 15px rgba(35, 134, 54, 0.4);
+  }
+
+  .github-style .btn-demo {
+    background: linear-gradient(135deg, #58a6ff 0%, #388bfd 100%);
+    color: #0d1117;
+    border: 1px solid #58a6ff;
+  }
+
+  .github-style .btn-demo:hover {
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.4);
+  }
+
+  /* ===== 4. Monochrome ===== */
+  .monochrome {
+    background: linear-gradient(135deg, #1a1a1a 0%, #252525 50%, #1a1a1a 100%);
+    border: 2px solid #3a3a3a;
+  }
+
+  .monochrome h2 { color: #e0e0e0; }
+
+  .monochrome .card-sample {
+    background: linear-gradient(145deg, rgba(45, 45, 45, 0.8) 0%, rgba(35, 35, 35, 0.9) 100%);
+    border: 1px solid rgba(60, 60, 60, 0.5);
+  }
+
+  .monochrome .card-sample h3 { color: #f0f0f0; }
+  .monochrome .card-sample p { color: #a0a0a0; }
+
+  .monochrome .badge {
+    background: rgba(60, 60, 60, 0.4);
+    border: 1px solid rgba(80, 80, 80, 0.5);
+    color: #c0c0c0;
+  }
+
+  .monochrome .btn-primary {
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
+    color: #e0e0e0;
+    border: 1px solid #5a5a5a;
+  }
+
+  .monochrome .btn-primary:hover {
+    background: linear-gradient(135deg, #5a5a5a 0%, #4a4a4a 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .monochrome .btn-demo {
+    background: linear-gradient(135deg, #6a6a6a 0%, #5a5a5a 100%);
+    color: #e0e0e0;
+    border: 1px solid #7a7a7a;
+  }
+
+  .monochrome .btn-demo:hover {
+    background: linear-gradient(135deg, #7a7a7a 0%, #6a6a6a 100%);
+  }
+
+  /* ===== 5. Warm Accent ===== */
+  .warm-accent {
+    background: linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1e1e1e 100%);
+    border: 2px solid #ff7a00;
+  }
+
+  .warm-accent h2 { color: #ff7a00; }
+
+  .warm-accent .card-sample {
+    background: rgba(35, 35, 35, 0.9);
+    border: 1px solid rgba(255, 122, 0, 0.2);
+  }
+
+  .warm-accent .card-sample h3 { color: #ffffff; }
+  .warm-accent .card-sample p { color: #b0b0b0; }
+
+  .warm-accent .badge {
+    background: rgba(255, 122, 0, 0.12);
+    border: 1px solid rgba(255, 122, 0, 0.35);
+    color: #ff9a40;
+  }
+
+  .warm-accent .btn-primary {
+    background: linear-gradient(135deg, #ff7a00 0%, #cc6200 100%);
+    color: #ffffff;
+    border: 1px solid #ff7a00;
+  }
+
+  .warm-accent .btn-primary:hover {
+    box-shadow: 0 0 20px rgba(255, 122, 0, 0.4);
+  }
+
+  .warm-accent .btn-demo {
+    background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%);
+    color: #1e1e1e;
+    border: 1px solid #ffc107;
+  }
+
+  .warm-accent .btn-demo:hover {
+    box-shadow: 0 0 20px rgba(255, 193, 7, 0.4);
+  }
+
+  /* ===== 6. Neon Purple ===== */
+  .neon-purple {
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+    border: 2px solid #a855f7;
+  }
+
+  .neon-purple h2 { color: #a855f7; }
+
+  .neon-purple .card-sample {
+    background: rgba(30, 15, 50, 0.8);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+  }
+
+  .neon-purple .card-sample h3 { color: #ffffff; }
+  .neon-purple .card-sample p { color: #b0b0b0; }
+
+  .neon-purple .badge {
+    background: rgba(168, 85, 247, 0.15);
+    border: 1px solid rgba(168, 85, 247, 0.4);
+    color: #c084fc;
+  }
+
+  .neon-purple .btn-primary {
+    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    color: #ffffff;
+    border: 1px solid #a855f7;
+  }
+
+  .neon-purple .btn-primary:hover {
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
+  }
+
+  .neon-purple .btn-demo {
+    background: linear-gradient(135deg, #00fff5 0%, #00d4cc 100%);
+    color: #1a0a2e;
+    border: 1px solid #00fff5;
+  }
+
+  .neon-purple .btn-demo:hover {
+    box-shadow: 0 0 25px rgba(0, 255, 245, 0.5);
+  }
+
+  /* ===== Back to Home ===== */
+  .back-home {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .back-home a {
+    color: #9ca3af;
+    font-size: 0.9rem;
+  }
+
+  .back-home a:hover {
+    color: #ffffff;
+  }
+</style>
