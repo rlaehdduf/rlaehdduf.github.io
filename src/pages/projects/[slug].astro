@@ -136,6 +136,9 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
   .project-image {
     position: relative;
     width: 100%;
+    max-width: 960px; /* HD 16:9 기준 height 540px */
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 2rem;
@@ -159,6 +162,8 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
   .project-image img {
     width: 100%;
     height: auto;
+    max-height: 540px; /* HD 1080p 의 50% */
+    object-fit: contain;
     display: block;
     transition: filter 0.3s ease, transform 0.3s ease;
   }
@@ -178,6 +183,17 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
 
   .project-image:hover img {
     filter: brightness(1.1);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 768px) {
+    .project-image {
+      max-width: 100%;
+    }
+
+    .project-image img {
+      max-height: 40vh; /* 모바일에서는 뷰포트 높이의 40% */
+    }
   }
 
   /* ===== Content ===== */
