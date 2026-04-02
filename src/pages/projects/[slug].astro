@@ -14,7 +14,6 @@ export async function getStaticPaths() {
 const { project } = Astro.props;
 const { Content } = await render(project);
 
-// 이미지가 없거나 placeholder 면 default 이미지 사용
 const defaultImage = '/images/defult.jpeg';
 const hasRealImage = project.data.image && project.data.image !== '/images/placeholder.svg' && project.data.image !== defaultImage;
 const displayImage = hasRealImage ? project.data.image : defaultImage;
@@ -45,7 +44,7 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
 
     <section class="links">
       {project.data.github && (
-        <a href={project.data.github} class="link-button" target="_blank" rel="noopener">
+        <a href={project.data.github} class="link-button github" target="_blank" rel="noopener">
           GitHub Repository
         </a>
       )}
@@ -66,7 +65,16 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
 </BaseLayout>
 
 <style>
+  /* ===== 컬러 시스템 ===== */
   .project-detail {
+    --bg-primary: #0D0D0E;
+    --bg-card: #111827;
+    --border-color: #1F2937;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --purple: #9333EA;
+    --cyan: #22D3EE;
+
     padding: 2rem;
     max-width: 900px;
     margin: 0 auto;
@@ -75,46 +83,45 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
   .back-link {
     display: inline-block;
     margin-bottom: 1.5rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
   }
 
   .back-link:hover {
-    color: var(--primary);
+    color: var(--cyan);
+    text-decoration: none;
   }
 
+  /* ===== Header ===== */
   header {
     margin-bottom: 2rem;
     padding: 2rem;
-    background: linear-gradient(145deg, rgba(80, 82, 85, 0.8) 0%, rgba(55, 57, 60, 0.9) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.4);
-    border-top: 1px solid rgba(110, 113, 116, 0.5);
-    border-left: 1px solid rgba(110, 113, 116, 0.5);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    backdrop-filter: blur(10px);
     position: relative;
     z-index: 1;
   }
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+    font-weight: 700;
     margin-bottom: 0.75rem;
-    color: #ffffff;
+    color: var(--text-primary);
   }
 
   .description {
-    color: var(--text-muted);
-    font-size: 1.125rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
     margin-bottom: 1rem;
     line-height: 1.6;
   }
 
   .dev-period {
     font-size: 0.875rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
   }
 
   .tech-stack {
@@ -124,87 +131,154 @@ const displayImage = hasRealImage ? project.data.image : defaultImage;
     margin-top: 1rem;
   }
 
+  /* ===== Image ===== */
   .project-image {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 2rem;
-    background: linear-gradient(145deg, rgba(70, 72, 75, 0.6) 0%, rgba(50, 52, 55, 0.7) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.3);
-    border-top: 1px solid rgba(110, 113, 116, 0.4);
-    border-left: 1px solid rgba(110, 113, 116, 0.4);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
   }
 
   .project-image img {
     width: 100%;
     height: auto;
+    display: block;
   }
 
+  /* ===== Content ===== */
   .content {
-    background: linear-gradient(145deg, rgba(70, 72, 75, 0.6) 0%, rgba(50, 52, 55, 0.7) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.3);
-    border-top: 1px solid rgba(110, 113, 116, 0.4);
-    border-left: 1px solid rgba(110, 113, 116, 0.4);
-    padding: 1.5rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
+    padding: 1.5rem;
     margin-bottom: 2rem;
   }
 
+  .content :global(h2) {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .content :global(h3) {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .content :global(p) {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+
+  .content :global(ul),
+  .content :global(ol) {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .content :global(code) {
+    background: rgba(147, 51, 234, 0.1);
+    padding: 0.125rem 0.375rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+
+  /* ===== Buttons ===== */
   .links {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
     margin-bottom: 2rem;
   }
 
   .link-button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.75rem 1.5rem;
-    background: linear-gradient(145deg, rgba(100, 103, 106, 0.9) 0%, rgba(70, 73, 76, 0.95) 100%);
-    border: 1px solid rgba(120, 123, 126, 0.5);
-    border-top: 1px solid rgba(140, 143, 146, 0.6);
-    border-left: 1px solid rgba(140, 143, 146, 0.6);
-    color: #e5e7eb;
+    font-weight: 600;
+    font-size: 0.875rem;
     border-radius: 8px;
-    font-weight: 500;
     transition: all 0.2s ease;
     text-decoration: none;
   }
 
-  .link-button:hover {
-    background: linear-gradient(145deg, rgba(110, 113, 116, 0.95) 0%, rgba(80, 83, 86, 0.98) 100%);
-    border-color: rgba(130, 133, 136, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  .link-button.github {
+    background: var(--purple);
+    color: var(--text-primary);
+    border: 1px solid transparent;
+  }
+
+  .link-button.github:hover {
+    background: rgba(147, 51, 234, 0.9);
+    border-color: rgba(147, 51, 234, 0.6);
+    box-shadow: 0 0 12px rgba(147, 51, 234, 0.25);
     text-decoration: none;
   }
 
   .link-button.demo {
-    background: linear-gradient(145deg, rgba(50, 90, 70, 0.9) 0%, rgba(30, 70, 50, 0.95) 100%);
-    border: 1px solid rgba(70, 110, 90, 0.5);
-    border-top: 1px solid rgba(90, 130, 110, 0.6);
-    border-left: 1px solid rgba(90, 130, 110, 0.6);
-    color: #b8e0d0;
+    background: var(--cyan);
+    color: var(--bg-primary);
+    border: 1px solid transparent;
   }
 
   .link-button.demo:hover {
-    background: linear-gradient(145deg, rgba(60, 100, 80, 0.95) 0%, rgba(40, 80, 60, 0.98) 100%);
-    border-color: rgba(80, 120, 100, 0.6);
+    background: rgba(34, 211, 238, 0.9);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+    text-decoration: none;
   }
 
+  /* ===== Demo Frame ===== */
   .demo-frame {
     margin-bottom: 2rem;
   }
 
   .demo-frame h2 {
     margin-bottom: 1rem;
-    color: #e5e7eb;
+    color: var(--text-primary);
+    font-size: 1.125rem;
   }
 
   .demo-frame iframe {
     width: 100%;
     height: 500px;
-    border: 1px solid rgba(90, 93, 96, 0.4);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    background: linear-gradient(145deg, rgba(70, 72, 75, 0.6) 0%, rgba(50, 52, 55, 0.7) 100%);
+    background: var(--bg-card);
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .project-detail {
+      padding: 1rem;
+    }
+
+    header {
+      padding: 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .links {
+      flex-direction: column;
+    }
+
+    .link-button {
+      width: 100%;
+    }
   }
 </style>

@@ -17,24 +17,32 @@ const { title } = Astro.props;
     <title>{title}</title>
     <link rel="icon" href="/favicon.svg" />
     
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    
     <!-- Open Graph / SNS Preview -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content="My Portfolio - Unity Games, Web Applications, and Tools" />
+    <meta property="og:description" content="Game Developer Portfolio - Unity Games, Web Applications, and Tools" />
     <meta property="og:image" content="/images/portfolio-og.png" />
     <meta property="og:url" content={Astro.url.href} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content="My Portfolio - Unity Games, Web Applications, and Tools" />
+    <meta name="twitter:description" content="Game Developer Portfolio - Unity Games, Web Applications, and Tools" />
     <meta name="twitter:image" content="/images/portfolio-og.png" />
+    
     <style is:global>
+      /* ===== 컬러 시스템 ===== */
       :root {
-        --primary: #2563eb;
-        --bg: #0f172a;
-        --card-bg: #1e293b;
-        --text: #f8fafc;
-        --text-muted: #94a3b8;
-        --border: #334155;
+        --bg-primary: #0D0D0E;
+        --bg-card: #111827;
+        --border-color: #1F2937;
+        --text-primary: #E5E7EB;
+        --text-secondary: #9CA3AF;
+        --purple: #9333EA;
+        --cyan: #22D3EE;
       }
 
       * {
@@ -44,49 +52,15 @@ const { title } = Astro.props;
       }
 
       body {
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        background: linear-gradient(135deg, #2b2d30 0%, #3a3c3f 25%, #4a4d50 50%, #3d3f42 75%, #2f3134 100%);
-        background-attachment: fixed;
-        color: var(--text);
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
         line-height: 1.6;
         min-height: 100vh;
       }
 
-      body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-          radial-gradient(ellipse at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 60%),
-          radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 60%),
-          linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, transparent 50%, rgba(0, 0, 0, 0.05) 100%);
-        pointer-events: none;
-        z-index: -1;
-      }
-
-      body::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: repeating-linear-gradient(
-          90deg,
-          transparent,
-          transparent 2px,
-          rgba(255, 255, 255, 0.01) 2px,
-          rgba(255, 255, 255, 0.01) 4px
-        );
-        pointer-events: none;
-        z-index: -1;
-      }
-
       a {
-        color: var(--primary);
+        color: var(--cyan);
         text-decoration: none;
       }
 
@@ -96,6 +70,11 @@ const { title } = Astro.props;
 
       main {
         min-height: calc(100vh - 120px);
+      }
+
+      /* ===== 코드/태그용 Mono 폰트 ===== */
+      code, .mono {
+        font-family: 'JetBrains Mono', monospace;
       }
     </style>
   </head>

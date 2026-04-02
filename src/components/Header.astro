@@ -28,11 +28,19 @@ const pathname = Astro.url.pathname;
 </header>
 
 <style is:global>
+  /* ===== 컬러 시스템 ===== */
   header {
+    --bg-primary: #0D0D0E;
+    --bg-card: #111827;
+    --border-color: #1F2937;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --purple: #9333EA;
+    --cyan: #22D3EE;
+
     padding: 1rem 2rem;
-    background: linear-gradient(180deg, rgba(45, 47, 50, 0.98) 0%, rgba(35, 37, 39, 0.95) 100%);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(120, 123, 126, 0.3);
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
     position: relative;
     z-index: 1000;
   }
@@ -46,14 +54,16 @@ const pathname = Astro.url.pathname;
   }
 
   .nav-link {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #e5e7eb;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
     text-decoration: none;
+    transition: color 0.2s ease;
   }
 
   .nav-link:hover {
-    color: #ffffff;
+    color: var(--cyan);
+    text-decoration: none;
   }
 
   .menu-toggle {
@@ -62,27 +72,26 @@ const pathname = Astro.url.pathname;
     justify-content: center;
     gap: 5px;
     background: transparent;
-    border: 2px solid transparent;
+    border: 1px solid var(--border-color);
     cursor: pointer;
     padding: 10px;
     z-index: 10001;
     position: relative;
     border-radius: 8px;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
   }
 
   .menu-toggle:hover {
-    background: rgba(100, 103, 106, 0.3);
-    border-color: rgba(120, 123, 126, 0.5);
+    background: rgba(147, 51, 234, 0.1);
+    border-color: var(--purple);
   }
 
   .menu-toggle:hover span {
-    background: #e5e7eb;
+    background: var(--cyan);
   }
 
   .menu-toggle:active {
     transform: scale(0.95);
-    background: rgba(100, 103, 106, 0.4);
   }
 
   .menu-toggle.active span:nth-child(1) {
@@ -98,33 +107,31 @@ const pathname = Astro.url.pathname;
   }
 
   .menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background: #d1d5db;
+    width: 22px;
+    height: 2px;
+    background: var(--text-secondary);
     border-radius: 2px;
     transition: all 0.3s ease;
     display: block;
   }
 
+  /* ===== Filter Menu ===== */
   .filter-menu {
     position: fixed;
-    top: 80px;
+    top: 70px;
     right: 20px;
-    width: 340px;
-    background: linear-gradient(180deg, rgba(50, 52, 55, 0.98) 0%, rgba(40, 42, 45, 0.95) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.5);
+    width: 320px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 0;
-    box-shadow: 
-      0 10px 40px rgba(0, 0, 0, 0.5),
-      0 0 60px rgba(0, 0, 0, 0.3);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.2s ease, transform 0.2s ease;
     z-index: 10000;
-    max-height: calc(100vh - 120px);
+    max-height: calc(100vh - 100px);
     overflow-y: auto;
-    backdrop-filter: blur(15px);
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(20px);
     pointer-events: none;
   }
 
@@ -138,41 +145,41 @@ const pathname = Astro.url.pathname;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.25rem;
-    border-bottom: 1px solid rgba(90, 93, 96, 0.5);
-    background: linear-gradient(180deg, rgba(60, 62, 65, 0.9) 0%, rgba(50, 52, 55, 0.8) 100%);
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-primary);
     position: sticky;
     top: 0;
     z-index: 10;
   }
 
   .filter-header h3 {
-    color: #e5e7eb;
-    font-size: 1.125rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
     margin: 0;
   }
 
   .close-btn {
-    background: rgba(90, 93, 96, 0.3);
-    border: 1px solid rgba(110, 113, 116, 0.4);
-    color: #d1d5db;
-    font-size: 1.5rem;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1.25rem;
     cursor: pointer;
     padding: 0;
     line-height: 1;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 6px;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
   }
 
   .close-btn:hover {
-    color: #ffffff;
-    background: rgba(100, 103, 106, 0.5);
-    border-color: rgba(120, 123, 126, 0.6);
+    color: var(--cyan);
+    border-color: var(--cyan);
   }
 
   .filter-content {
@@ -180,11 +187,11 @@ const pathname = Astro.url.pathname;
   }
 
   .menu-hint {
-    color: #9ca3af;
+    color: var(--text-secondary);
     font-size: 0.75rem;
     margin-bottom: 1rem;
     padding: 0.5rem;
-    background: rgba(70, 72, 75, 0.3);
+    background: var(--bg-primary);
     border-radius: 6px;
     text-align: center;
     line-height: 1.6;
@@ -193,14 +200,14 @@ const pathname = Astro.url.pathname;
   .project-tree {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .tree-folder {
     border-radius: 8px;
     overflow: hidden;
-    background: rgba(60, 62, 65, 0.4);
-    border: 1px solid rgba(90, 93, 96, 0.3);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
   }
 
   .tree-folder-header {
@@ -209,18 +216,18 @@ const pathname = Astro.url.pathname;
     gap: 0.5rem;
     padding: 0.75rem 1rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s ease;
     user-select: none;
   }
 
   .tree-folder-header:hover {
-    background: rgba(80, 82, 85, 0.5);
+    background: rgba(147, 51, 234, 0.1);
   }
 
   .tree-folder-arrow {
-    font-size: 0.75rem;
-    color: #9ca3af;
-    transition: transform 0.3s ease;
+    font-size: 0.625rem;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease;
     width: 16px;
     text-align: center;
     display: inline-block;
@@ -231,33 +238,33 @@ const pathname = Astro.url.pathname;
   }
 
   .tree-folder-icon {
-    font-size: 1.125rem;
+    font-size: 1rem;
     display: inline-block;
-    width: 24px;
+    width: 20px;
     text-align: center;
   }
 
   .tree-folder-label {
-    color: #e5e7eb;
-    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-size: 0.85rem;
     font-weight: 600;
     flex: 1;
   }
 
   .tree-folder-count {
-    color: #9ca3af;
-    font-size: 0.75rem;
-    background: rgba(80, 82, 85, 0.5);
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    background: var(--bg-card);
     padding: 0.125rem 0.5rem;
     border-radius: 10px;
-    border: 1px solid rgba(100, 103, 106, 0.3);
+    border: 1px solid var(--border-color);
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .tree-children {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
-    background: rgba(45, 47, 50, 0.5);
+    transition: max-height 0.2s ease;
     display: flex;
     flex-direction: column;
     padding: 0;
@@ -266,7 +273,7 @@ const pathname = Astro.url.pathname;
 
   .tree-children.expanded {
     max-height: 800px;
-    border-top: 1px solid rgba(90, 93, 96, 0.3);
+    border-top: 1px solid var(--border-color);
     padding: 0.5rem 0;
   }
 
@@ -274,20 +281,20 @@ const pathname = Astro.url.pathname;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    padding: 0.625rem 1rem 0.625rem 2.5rem;
+    padding: 0.5rem 1rem 0.5rem 2.25rem;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;
   }
 
   .tree-item:hover {
-    background: rgba(90, 93, 96, 0.4);
+    background: rgba(34, 211, 238, 0.1);
   }
 
   .tree-item-icon {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     display: inline-block;
     width: 20px;
     text-align: center;
@@ -295,8 +302,8 @@ const pathname = Astro.url.pathname;
   }
 
   .tree-item-label {
-    color: #e5e7eb;
-    font-size: 0.85rem;
+    color: var(--text-primary);
+    font-size: 0.8rem;
     flex: 1;
     text-align: left;
   }

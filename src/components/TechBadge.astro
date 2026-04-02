@@ -1,4 +1,7 @@
 ---
+// TechBadge.astro - JetBrains Mono + Purple 스타일
+// GitHub 스타일 + 절제된 네온 포인트
+
 interface Props {
   name: string;
 }
@@ -12,14 +15,18 @@ const { name } = Astro.props;
   .tech-badge {
     display: inline-block;
     padding: 0.25rem 0.625rem;
-    background: linear-gradient(145deg, rgba(70, 72, 75, 0.8) 0%, rgba(50, 52, 55, 0.9) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.4);
-    border-top: 1px solid rgba(110, 113, 116, 0.5);
-    border-left: 1px solid rgba(110, 113, 116, 0.5);
-    border-radius: 8px;
+    background: rgba(147, 51, 234, 0.1);
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 6px;
     font-size: 0.75rem;
-    color: #d1d5db;
     font-weight: 500;
-    backdrop-filter: blur(5px);
+    color: #C084FC;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s ease;
+  }
+
+  .tech-badge:hover {
+    background: rgba(147, 51, 234, 0.15);
+    border-color: rgba(147, 51, 234, 0.4);
   }
 </style>

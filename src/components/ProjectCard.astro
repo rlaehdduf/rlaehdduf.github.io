@@ -1,4 +1,7 @@
 ---
+// ProjectCard.astro - GitHub 스타일 + 절제된 Neon Purple/Cyan 포인트
+// 게임 개발자 포트폴리오용
+
 import TechBadge from './TechBadge.astro';
 
 interface Props {
@@ -14,7 +17,6 @@ interface Props {
 
 const { title, description, image, technologies, slug, featured, devPeriod, type } = Astro.props;
 
-// 이미지가 없거나 placeholder 면 default 이미지 사용
 const defaultImage = '/images/defult.jpeg';
 const hasRealImage = image && image !== '/images/placeholder.svg' && image !== defaultImage;
 const displayImage = hasRealImage ? image : defaultImage;
@@ -23,6 +25,7 @@ const displayImage = hasRealImage ? image : defaultImage;
 <a href={`/projects/${slug}`} class="project-card" data-featured={featured} data-type={type}>
   <div class="card-image">
     <img src={displayImage} alt={title} loading="lazy" />
+    <div class="card-overlay"></div>
   </div>
   <div class="card-content">
     <h3>{title}</h3>
@@ -33,63 +36,45 @@ const displayImage = hasRealImage ? image : defaultImage;
     <div class="tech-stack">
       {technologies.map((tech) => <TechBadge name={tech} />)}
     </div>
+    <span class="view-button">View Project</span>
   </div>
 </a>
 
 <style>
+  /* ===== 컬러 시스템 ===== */
   .project-card {
+    --bg-primary: #0D0D0E;
+    --bg-card: #111827;
+    --border-color: #1F2937;
+    --text-primary: #E5E7EB;
+    --text-secondary: #9CA3AF;
+    --purple: #9333EA;
+    --cyan: #22D3EE;
+
     display: block;
-    background: linear-gradient(145deg, rgba(80, 82, 85, 0.8) 0%, rgba(55, 57, 60, 0.9) 100%);
-    border: 1px solid rgba(90, 93, 96, 0.4);
-    border-top: 1px solid rgba(110, 113, 116, 0.5);
-    border-left: 1px solid rgba(110, 113, 116, 0.5);
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     overflow: hidden;
-    transition: box-shadow 0.3s, border-color 0.3s, transform 0.2s ease-out;
-    backdrop-filter: blur(10px);
+    transition: transform 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
     position: relative;
     z-index: 1;
-    box-shadow: 
-      12px 12px 24px rgba(0, 0, 0, 0.5),
-      8px 8px 40px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .project-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 
-      20px 20px 40px rgba(0, 0, 0, 0.6),
-      12px 12px 50px rgba(0, 0, 0, 0.5),
-      inset 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-color: rgba(100, 103, 106, 0.6);
-    border-top-color: rgba(120, 123, 126, 0.7);
-    border-left-color: rgba(120, 123, 126, 0.7);
+    border-color: var(--cyan);
+    transform: translateY(-2px);
     text-decoration: none;
   }
 
-  .project-card:active {
-    transform: translateY(2px) scale(0.98);
-    box-shadow: 
-      4px 4px 12px rgba(0, 0, 0, 0.7),
-      inset 0 4px 16px rgba(0, 0, 0, 0.4);
-    border-color: rgba(110, 113, 116, 0.8);
-    border-top-color: rgba(130, 133, 136, 0.9);
-    border-left-color: rgba(130, 133, 136, 0.9);
-    transition: transform 0.05s ease-out, box-shadow 0.05s;
-  }
-
-  .project-card[data-featured="true"] {
-    border-color: rgba(120, 123, 126, 0.6);
-    border-top-color: rgba(140, 143, 146, 0.7);
-    border-left-color: rgba(140, 143, 146, 0.7);
-    background: linear-gradient(145deg, rgba(85, 87, 90, 0.85) 0%, rgba(60, 62, 65, 0.95) 100%);
-  }
-
+  /* ===== 이미지 + 오버레이 ===== */
   .card-image {
+    position: relative;
     width: 100%;
-    height: 200px;
+    height: 160px;
     overflow: hidden;
-    background: var(--border);
   }
 
   .card-image img {
@@ -98,36 +83,74 @@ const displayImage = hasRealImage ? image : defaultImage;
     object-fit: cover;
   }
 
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    transition: background 0.2s ease;
+  }
+
+  .project-card:hover .card-overlay {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  /* ===== 카드 내용 ===== */
   .card-content {
     padding: 1rem;
   }
 
   h3 {
-    color: #ffffff;
-    font-size: 1.125rem;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 600;
     margin-bottom: 0.5rem;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   }
 
   .description {
-    color: var(--text-muted);
-    font-size: 0.875rem;
-    margin-bottom: 0.75rem;
-    line-height: 1.4;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
   }
 
   .dev-period {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
   }
 
   .tech-stack {
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  /* ===== 버튼 스타일 ===== */
+  .view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.625rem 1rem;
+    background: var(--cyan);
+    color: var(--bg-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .project-card:hover .view-button {
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.25);
+  }
+
+  /* ===== Featured 카드 ===== */
+  .project-card[data-featured="true"] {
+    border-color: rgba(147, 51, 234, 0.3);
+  }
+
+  .project-card[data-featured="true"]:hover {
+    border-color: var(--purple);
   }
 </style>
