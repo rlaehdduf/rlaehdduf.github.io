@@ -1,0 +1,32 @@
+---
+// TechBadgeNew.astro - 절제된 Purple 태그 스타일
+// JetBrains Mono 폰트 사용
+
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="tech-badge">{name}</span>
+
+<style>
+  .tech-badge {
+    display: inline-block;
+    padding: 0.25rem 0.625rem;
+    background: rgba(147, 51, 234, 0.1);    /* Purple 10% opacity */
+    border: 1px solid rgba(147, 51, 234, 0.3);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #C084FC;                          /* Purple lighter */
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s ease;
+  }
+
+  .tech-badge:hover {
+    background: rgba(147, 51, 234, 0.15);
+    border-color: rgba(147, 51, 234, 0.4);
+  }
+</style>
