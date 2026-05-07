@@ -11,7 +11,6 @@ technologies:
   - Event-driven Architecture
   - CSV Data Pipeline
 github: https://github.com/kongnamul-muchim/AFK
-demo: https://kongnamul-muchim.github.io/AFK
 featured: true
 devPeriod: "2026-03-27 ~ 2026-05-07"
 ---
